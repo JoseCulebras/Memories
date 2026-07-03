@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuestro Álbum 💙</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #04080f;
+      --bg-card:     #081322;
+      --bg-raised:   #0d1e38;
+      --bg-input:    #030911;
+      --blue:        #163368;
+      --blue-mid:    #2450a8;
+      --blue-accent: #4f86e0;
+      --blue-sky:    #8fbfff;
+      --pink:        #e84393;
+      --text:        #d4e8f7;
+      --text-dim:    #6a92b8;
+      --text-muted:  #2e4a68;
+      --border:      #102140;
+      --border-hi:   #1c3d72;
+      --r:           14px;
+      --r-sm:        8px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 400;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── STARFIELD HEADER ─── */
+    .site-header {
+      position: relative;
+      padding: 3rem 1rem 2rem;
+      text-align: center;
+      overflow: hidden;
+      background: linear-gradient(180deg, #020611 0%, var(--bg) 100%);
+    }
+
+    .site-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 15%, #ffffff22 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 60%, #ffffff18 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 40% 30%, #ffffff20 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 80%, #ffffff15 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 20%, #ffffff1a 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 80% 55%, #ffffff12 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 35%, #ffffff20 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 85%, #ffffff18 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 10%, #8fbfff28 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 70%, #8fbfff1a 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .heart-wrap {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 0.6rem;
+    }
+
+    .heart-icon {
+      font-size: 2.6rem;
+      display: block;
+      animation: heartbeat 2.4s ease-in-out infinite;
+      filter: drop-shadow(0 0 12px #e8439380);
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      14%       { transform: scale(1.2); }
+      28%       { transform: scale(1.05); }
+      42%       { transform: scale(1.12); }
+      56%       { transform: scale(1); }
+    }
+
+    .site-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: var(--blue-sky);
+      position: relative;
+    }
+
+    .site-subtitle {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 0.35rem;
+    }
+
+    /* ─── NAV ─── */
+    .site-nav {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 0.45rem 1.75rem;
+      border-radius: 99px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: var(--blue);
+      border-color: var(--blue-mid);
+      color: var(--text);
+    }
+
+    .tab-btn:hover:not(.active) {
+      border-color: var(--border-hi);
+      color: var(--text-dim);
+    }
+
+    /* ─── PAGES ─── */
+    .page {
+      display: none;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 5rem;
+    }
+
+    .page.visible { display: block; }
+
+    /* ─── COUPLE ROW ─── */
+    .couple-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0;
+      margin-bottom: 1.5rem;
+      align-items: start;
+    }
+
+    /* Connector between cards */
+    .couple-connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 0.5rem;
+      padding-top: 4rem;
+      gap: 0.5rem;
+    }
+
+    .connector-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--border-hi), transparent);
+    }
+
+    .connector-heart {
+      font-size: 1.1rem;
+      filter: drop-shadow(0 0 8px #e8439360);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.15); }
+    }
+
+    /* ─── PERSON CARD ─── */
+    .person-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 2rem 1.5rem 1.75rem;
+    }
+
+    /* Photo */
+    .profile-area {
+      position: relative;
+      width: 124px;
+      height: 124px;
+      margin: 0 auto 1.5rem;
+      cursor: pointer;
+    }
+
+    .profile-ring {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--bg-raised);
+      border: 2px dashed var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .profile-ring.has-photo {
+      border-style: solid;
+      border-color: var(--blue-accent);
+      box-shadow: 0 0 20px #4f86e025;
+    }
+
+    .profile-ring img {
+      display: none;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .profile-ring.has-photo .placeholder-icon { display: none; }
+    .profile-ring.has-photo img { display: block; }
+
+    .placeholder-icon { font-size: 2.4rem; color: var(--text-muted); user-select: none; }
+
+    .photo-hover {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s;
+      font-size: 1.2rem;
+    }
+
+    .profile-area:hover .photo-hover { opacity: 1; }
+    .profile-area:hover .profile-ring { border-color: var(--blue-accent); }
+
+    /* Info fields */
+    .info-grid { display: grid; gap: 0.5rem; }
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .info-lbl {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      width: 82px;
+      flex-shrink: 0;
+      text-align: right;
+    }
+
+    .info-input {
+      flex: 1;
+      min-width: 0;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid transparent;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px 4px 0 0;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .info-input::placeholder { color: var(--text-muted); font-style: italic; font-size: 0.8rem; }
+
+    .info-input:hover, .info-input:focus {
+      background: var(--bg-input);
+      border-bottom-color: var(--blue-accent);
+      outline: none;
+    }
+
+    /* ─── SHARED CARD ─── */
+    .shared-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      color: var(--blue-sky);
+      margin-bottom: 1.25rem;
+      text-align: center;
+    }
+
+    /* Colors */
+    .colors-flex {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .color-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .color-item span {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-muted);
+    }
+
+    input[type="color"] {
+      -webkit-appearance: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      padding: 3px;
+      cursor: pointer;
+      background: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input[type="color"]:hover {
+      border-color: var(--blue-accent);
+      box-shadow: 0 0 12px #4f86e030;
+    }
+
+    input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; border-radius: 50%; }
+    input[type="color"]::-webkit-color-swatch { border-radius: 50%; border: none; }
+    input[type="color"]::-moz-color-swatch { border-radius: 50%; border: none; }
+
+    /* Symbols */
+    .symbols-flex {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .sym-input {
+      width: 62px;
+      height: 62px;
+      background: var(--bg-raised);
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      text-align: center;
+      font-size: 1.9rem;
+      line-height: 1;
+      color: var(--text);
+      cursor: text;
+      transition: border-color 0.2s, background 0.2s;
+      display: block;
+      padding: 0;
+    }
+
+    .sym-input:focus {
+      outline: none;
+      border-color: var(--blue-accent);
+      border-style: solid;
+      background: var(--bg-input);
+    }
+
+    /* ─── ALBUM TOOLBAR ─── */
+    .album-toolbar {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      flex: 1;
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-ctl {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.5rem 0.85rem;
+      border-radius: var(--r-sm);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      cursor: pointer;
+      min-width: 145px;
+      color-scheme: dark;
+    }
+
+    .filter-ctl:focus { outline: none; border-color: var(--blue-accent); }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.5rem 0.85rem;
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .btn-ghost:hover { border-color: var(--border-hi); color: var(--text-dim); }
+
+    .btn-add {
+      background: var(--blue);
+      border: 1px solid var(--blue-mid);
+      color: var(--text);
+      padding: 0.55rem 1.3rem;
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background 0.2s;
+    }
+
+    .btn-add:hover { background: var(--blue-mid); }
+
+    /* ─── PHOTO GRID ─── */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.65rem;
+    }
+
+    .photo-tile {
+      aspect-ratio: 1;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.18s ease, border-color 0.18s, box-shadow 0.18s;
+    }
+
+    .photo-tile:hover {
+      transform: scale(1.04);
+      border-color: var(--blue-accent);
+      box-shadow: 0 4px 24px rgba(79,134,224,0.18);
+      z-index: 2;
+    }
+
+    .photo-tile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .tile-date-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(3,7,18,0.92));
+      padding: 1.5rem 0.5rem 0.4rem;
+      font-size: 0.65rem;
+      color: #5a82a8;
+      pointer-events: none;
+    }
+
+    .tile-note-dot {
+      position: absolute;
+      top: 6px; right: 6px;
+      width: 16px; height: 16px;
+      background: var(--blue-mid);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.48rem;
+      pointer-events: none;
+      box-shadow: 0 0 6px #2450a860;
+    }
+
+    /* Empty state */
+    .gallery-empty {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 5rem 2rem;
+      color: var(--text-muted);
+    }
+
+    .gallery-empty .empty-icon { font-size: 2.8rem; display: block; margin-bottom: 1rem; }
+
+    /* ─── MODALS ─── */
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(2,5,14,0.92);
+      z-index: 500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .backdrop.open { display: flex; }
+
+    .modal-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      width: 100%;
+      max-height: 92vh;
+      overflow-y: auto;
+      position: relative;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    .modal-box::-webkit-scrollbar { width: 4px; }
+    .modal-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .modal-md { max-width: 640px; }
+    .modal-sm { max-width: 450px; }
+
+    .btn-x {
+      position: absolute;
+      top: 0.875rem;
+      right: 0.875rem;
+      background: rgba(0,0,0,0.4);
+      border: none;
+      color: var(--text-dim);
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: all 0.2s;
+    }
+
+    .btn-x:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+
+    /* Photo view */
+    .view-img-area {
+      background: #020408;
+      border-radius: var(--r) var(--r) 0 0;
+      max-height: 52vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .view-img-area img {
+      max-width: 100%;
+      max-height: 52vh;
+      object-fit: contain;
+      display: block;
+    }
+
+    .modal-body {
+      padding: 1.25rem 1.5rem 1.5rem;
+    }
+
+    .view-date {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 0.875rem;
+      letter-spacing: 0.04em;
+    }
+
+    .desc-area {
+      width: 100%;
+      min-height: 88px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      color: var(--text);
+      padding: 0.75rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      line-height: 1.55;
+      resize: vertical;
+      transition: border-color 0.2s;
+    }
+
+    .desc-area::placeholder { color: var(--text-muted); font-style: italic; }
+    .desc-area:focus { outline: none; border-color: var(--blue-accent); }
+
+    .modal-actions {
+      display: flex;
+      gap: 0.65rem;
+      justify-content: flex-end;
+      margin-top: 1rem;
+    }
+
+    .btn-del {
+      background: #110606;
+      border: 1px solid #3c1111;
+      color: #f87171;
+      padding: 0.5rem 0.875rem;
+      border-radius: 7px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      transition: background 0.2s;
+    }
+
+    .btn-del:hover { background: #1e0a0a; }
+
+    .btn-save {
+      background: var(--blue-mid);
+      border: none;
+      color: #fff;
+      padding: 0.5rem 1.35rem;
+      border-radius: 7px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .btn-save:hover { background: var(--blue-accent); }
+
+    /* Upload modal */
+    .upload-header {
+      padding: 1.25rem 1.5rem 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--blue-sky);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .drop-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--r-sm);
+      padding: 2rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      line-height: 1.6;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+
+    .drop-zone:hover, .drop-zone.over {
+      border-color: var(--blue-accent);
+      background: var(--bg-input);
+      color: var(--text-dim);
+    }
+
+    .drop-icon { font-size: 2.2rem; display: block; margin-bottom: 0.5rem; }
+
+    .thumb-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+      margin-top: 0.875rem;
+    }
+
+    .thumb-item {
+      aspect-ratio: 1;
+      border-radius: 7px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg-raised);
+    }
+
+    .thumb-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .upload-count { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem; }
+
+    .date-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .date-row label { font-size: 0.8rem; color: var(--text-dim); white-space: nowrap; }
+
+    input[type="date"] {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.45rem 0.75rem;
+      border-radius: 7px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      flex: 1;
+      color-scheme: dark;
+    }
+
+    input[type="date"]:focus { outline: none; border-color: var(--blue-accent); }
+
+    .btn-confirm {
+      background: var(--blue-mid);
+      border: none;
+      color: #fff;
+      padding: 0.55rem 1.5rem;
+      border-radius: 7px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: background 0.2s, opacity 0.2s;
+    }
+
+    .btn-confirm:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-confirm:not(:disabled):hover { background: var(--blue-accent); }
+
+    /* Global scrollbar */
+    * { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 720px) {
+      .couple-row {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+
+      .couple-connector { display: none; }
+
+      .photo-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .album-toolbar { flex-direction: column; align-items: stretch; }
+      .filter-group { flex-direction: column; }
+      .btn-add { width: 100%; justify-content: center; }
+
+      .site-title { font-size: 1.6rem; }
+
+      .backdrop { padding: 0; align-items: flex-end; }
+      .modal-box { border-radius: var(--r) var(--r) 0 0; max-height: 95vh; }
+    }
+
+    @media (max-width: 420px) {
+      .profile-area { width: 108px; height: 108px; }
+      .person-card { padding: 1.5rem 1rem 1.25rem; }
+      .info-lbl { width: 70px; }
+      .page { padding: 1.25rem 0.875rem 4rem; }
+      .thumb-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="site-header">
+  <div class="heart-wrap">
+    <span class="heart-icon">❤️</span>
+  </div>
+  <div class="site-title">Nuestro Álbum</div>
+  <div class="site-subtitle">recuerdos que duran para siempre</div>
+</header>
+
+<!-- ═══ NAV ═══ -->
+<nav class="site-nav">
+  <button class="tab-btn active" data-target="cover">Portada</button>
+  <button class="tab-btn" data-target="album">Álbum</button>
+</nav>
+
+<!-- ═══ COVER PAGE ═══ -->
+<main id="page-cover" class="page visible">
+
+  <div class="couple-row">
+
+    <!-- Person 1 -->
+    <div class="person-card">
+      <div class="profile-area" onclick="pickPhoto('p1')">
+        <div class="profile-ring" id="ring-p1">
+          <span class="placeholder-icon">👤</span>
+          <img id="img-p1" src="" alt="">
+        </div>
+        <div class="photo-hover">📷</div>
+      </div>
+      <input type="file" id="file-p1" accept="image/*" style="display:none">
+
+      <div class="info-grid">
+        <div class="info-row">
+          <span class="info-lbl">Nombre</span>
+          <input class="info-input" type="text" id="p1-name" placeholder="Nombre…">
+        </div>
+        <div class="info-row">
+          <span class="info-lbl">Apodo</span>
+          <input class="info-input" type="text" id="p1-nick" placeholder="Apodo…">
+        </div>
+        <div class="info-row">
+          <span class="info-lbl">Edad</span>
+          <input class="info-input" type="text" id="p1-age" placeholder="Edad…">
+        </div>
+        <div class="info-row">
+          <span class="info-lbl">Cumpleaños</span>
+          <input class="info-input" type="text" id="p1-bday" placeholder="DD/MM/AAAA">
+        </div>
+        <div class="info-row">
+          <span class="info-lbl">Horóscopo</span>
+          <input class="info-input" type="text" id="p1-horoscope" placeholder="Signo…">
+        </div>
+      </div>
+    </div>
+
+    <!-- Connector -->
+    <div class="couple-connector">
+      <div class="connector-line"></div>
+      <span class="connector-heart">💙</span>
+      <div class="connector-line"></div>
+    </div>
+
+    <!-- Person 2 -->
+    <div class="person-card">
+      <div class="profile-area" onclick="pickPhoto('p2')">
+        <div class="profile-ring" id="ring-p2">
+          <span class="placeholder-icon">👤</span>
+          <img id="img-p2" src="" alt="">
+        </div>
+        <div class="photo-hover">📷</div>
+      </div>
+      <input type="file" id="file-p2" accept="image/*" style="display:none">
+
+      <div class="info-grid">
+        <div class="info-row">
+          <span class="info-lbl">Nombre</span>
+          <input class="info-input" type="text" id="p2-name" placeholder="Nombre…">
+        </div>
+        <div class="info-row">
+          <span class="info-lbl">Apodo</span>
+          <input class="info-input" type="text" id="p2-nick" placeholder="Apodo…">
+        </div>
+        <div class="info-row">
+          <span class="info-lbl">Edad</span>
+          <input class="info-input" type="text" id="p2-age" placeholder="Edad…">
+        </div>
+        <div class="info-row">
+          <span class="info-lbl">Cumpleaños</span>
+          <input class="info-input" type="text" id="p2-bday" placeholder="DD/MM/AAAA">
+        </div>
+        <div class="info-row">
+          <span class="info-lbl">Horóscopo</span>
+          <input class="info-input" type="text" id="p2-horoscope" placeholder="Signo…">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared: Colors -->
+  <div class="shared-card">
+    <div class="card-title">🎨 Colores favoritos</div>
+    <div class="colors-flex">
+      <div class="color-item">
+        <input type="color" id="col-1" value="#163368">
+        <span>Color 1</span>
+      </div>
+      <div class="color-item">
+        <input type="color" id="col-2" value="#e84393">
+        <span>Color 2</span>
+      </div>
+      <div class="color-item">
+        <input type="color" id="col-3" value="#8b5cf6">
+        <span>Color 3</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared: Symbols -->
+  <div class="shared-card">
+    <div class="card-title">✨ Símbolos que nos representan</div>
+    <div class="symbols-flex">
+      <input class="sym-input" type="text" placeholder="✨" maxlength="2" id="sym-1">
+      <input class="sym-input" type="text" placeholder="🌙" maxlength="2" id="sym-2">
+      <input class="sym-input" type="text" placeholder="⭐" maxlength="2" id="sym-3">
+      <input class="sym-input" type="text" placeholder="🎵" maxlength="2" id="sym-4">
+    </div>
+  </div>
+
+</main>
+
+<!-- ═══ ALBUM PAGE ═══ -->
+<main id="page-album" class="page">
+
+  <div class="album-toolbar">
+    <div class="filter-group">
+      <select class="filter-ctl" id="yr-filter" onchange="applyFilters()">
+        <option value="">📅 Todos los años</option>
+      </select>
+      <input type="date" class="filter-ctl" id="day-filter" title="Filtrar por día concreto" onchange="applyFilters()">
+      <button class="btn-ghost" onclick="resetFilters()">✕ Limpiar filtros</button>
+    </div>
+    <button class="btn-add" onclick="openUpload()">＋ Añadir fotos</button>
+  </div>
+
+  <div class="photo-grid" id="gallery"></div>
+
+</main>
+
+<!-- ═══ PHOTO VIEW MODAL ═══ -->
+<div class="backdrop" id="view-bd">
+  <div class="modal-box modal-md">
+    <button class="btn-x" onclick="closeView()">✕</button>
+    <div class="view-img-area">
+      <img id="view-img" src="" alt="">
+    </div>
+    <div class="modal-body">
+      <div class="view-date" id="view-date"></div>
+      <textarea class="desc-area" id="view-desc" placeholder="Añade una descripción a este recuerdo…"></textarea>
+      <div class="modal-actions">
+        <button class="btn-del" onclick="deletePhoto()">🗑 Eliminar foto</button>
+        <button class="btn-save" id="btn-save-desc" onclick="saveDesc()">💾 Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ UPLOAD MODAL ═══ -->
+<div class="backdrop" id="up-bd">
+  <div class="modal-box modal-sm">
+    <button class="btn-x" onclick="closeUpload()">✕</button>
+    <div class="upload-header">📸 Añadir fotos al álbum</div>
+    <div class="modal-body">
+      <div class="drop-zone" id="drop-zone"
+           onclick="document.getElementById('multi-file').click()"
+           ondragover="onDragOver(event)"
+           ondragleave="onDragLeave()"
+           ondrop="onDrop(event)">
+        <span class="drop-icon">🖼️</span>
+        Haz clic aquí o arrastra tus fotos<br>
+        <small>Puedes seleccionar varias imágenes a la vez</small>
+      </div>
+      <input type="file" id="multi-file" accept="image/*" multiple style="display:none">
+
+      <div class="thumb-grid" id="thumb-grid"></div>
+      <div class="upload-count" id="up-count"></div>
+
+      <div class="date-row">
+        <label>📅 Fecha de las fotos:</label>
+        <input type="date" id="up-date">
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-confirm" id="btn-confirm" disabled onclick="commitUpload()">
+          📤 Añadir al álbum
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ SCRIPT ADAPTADO PARA CLOUDINARY Y JSONBIN ════════ -->
+<script>
+/* ═══════════════════════════════════════════════════════════
+   1. CREDENCIALES (Reemplaza con tus datos de los Pasos 1 y 2)
+═══════════════════════════════════════════════════════════ */
+const CLOUD_NAME   = "lz69sdof";
+const CLOUD_PRESET = "Memories AxJ"; // O el nombre que le hayas puesto
+
+const BIN_ID       = "6a46a975da38895dfe23f061";
+const MASTER_KEY   = "$2a$10$TdWH5mgDS/pp1qQ0dzK.QeAUYKYtG1G/tfJ9PC6/4h2AP5cRDikry";
+
+/* ═══════════════════════════════════════════════════════════
+   ESTADO GLOBAL
+═══════════════════════════════════════════════════════════ */
+let globalState = {
+  p1: { name: '', nick: '', age: '', bday: '', horoscope: '', photo: '' },
+  p2: { name: '', nick: '', age: '', bday: '', horoscope: '', photo: '' },
+  shared: { colors: ['#163368', '#e84393', '#8b5cf6'], symbols: ['', '', '', ''] },
+  photos: []
+};
+let photos       = [];
+let activeId     = null;
+let pendingFiles = [];
+
+/* ═══════════════════════════════════════════════════════════
+   CONEXIÓN CON LAS APIS (Nube)
+═══════════════════════════════════════════════════════════ */
+async function loadAllData() {
+  try {
+    const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+      headers: { 'X-Master-Key': MASTER_KEY }
+    });
+    const json = await res.json();
+    if (json.record) {
+      globalState = json.record;
+      photos = globalState.photos || [];
+      applyStateToDOM();
+    }
+  } catch (err) {
+    console.error("Error al descargar los datos del álbum:", err);
+  }
+}
+
+async function saveAllData() {
+  try {
+    globalState.photos = photos;
+    await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+      method: 'PUT',
+      headers: {
+        'X-Master-Key': MASTER_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(globalState)
+    });
+  } catch (err) {
+    console.error("Error al subir los datos a la nube:", err);
+  }
+}
+
+async function uploadToCloudinary(base64Image) {
+  try {
+    const formData = new FormData();
+    formData.append('file', base64Image);
+    formData.append('upload_preset', CLOUD_PRESET);
+
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    return data.secure_url;
+  } catch (err) {
+    console.error("Error en Cloudinary:", err);
+    return null;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SINCRO DOM Y EVENTOS
+═══════════════════════════════════════════════════════════ */
+function applyStateToDOM() {
+  ['p1', 'p2'].forEach(id => {
+    const d = globalState[id] || {};
+    ['name','nick','age','bday','horoscope'].forEach(f => {
+      const el = document.getElementById(`${id}-${f}`);
+      if (el && d[f] !== undefined) el.value = d[f];
+    });
+    if (d.photo) applyProfilePhoto(id, d.photo);
+  });
+  const s = globalState.shared || {};
+  if (s.colors) s.colors.forEach((c, i) => { const el = document.getElementById(`col-${i+1}`); if (el) el.value = c; });
+  if (s.symbols) s.symbols.forEach((sym, i) => { const el = document.getElementById(`sym-${i+1}`); if (el) el.value = sym; });
+}
+
+async function saveProfile(id) {
+  const g = f => (document.getElementById(`${id}-${f}`) || {}).value || '';
+  globalState[id] = {
+    ...globalState[id],
+    name:      g('name'),
+    nick:      g('nick'),
+    age:       g('age'),
+    bday:      g('bday'),
+    horoscope: g('horoscope'),
+  };
+  await saveAllData();
+}
+
+async function saveShared() {
+  globalState.shared = {
+    colors:  [1,2,3].map(i => document.getElementById(`col-${i}`).value),
+    symbols: [1,2,3,4].map(i => document.getElementById(`sym-${i}`).value),
+  };
+  await saveAllData();
+}
+
+function bindSaveListeners() {
+  ['p1','p2'].forEach(id => {
+    ['name','nick','age','bday','horoscope'].forEach(f => {
+      const el = document.getElementById(`${id}-${f}`);
+      if (el) el.addEventListener('change', () => saveProfile(id));
+    });
+    document.getElementById(`file-${id}`).addEventListener('change', function() {
+      if (this.files[0]) resizeImage(this.files[0], 600, 600, async url => {
+        applyProfilePhoto(id, url);
+        const cloudUrl = await uploadToCloudinary(url);
+        if (cloudUrl) {
+          globalState[id].photo = cloudUrl;
+          await saveAllData();
+        }
+      });
+    });
+  });
+  [1,2,3].forEach(i   => document.getElementById(`col-${i}`).addEventListener('change', saveShared));
+  [1,2,3,4].forEach(i => document.getElementById(`sym-${i}`).addEventListener('change', saveShared));
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INIT Y NAVEGACIÓN (Se mantienen iguales)
+═══════════════════════════════════════════════════════════ */
+async function init() {
+  await loadAllData();
+  bindSaveListeners();
+  photos.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  rebuildYearFilter();
+  renderGallery();
+}
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('visible'));
+    btn.classList.add('active');
+    document.getElementById('page-' + btn.dataset.target).classList.add('visible');
+  });
+});
+
+function pickPhoto(id) { document.getElementById(`file-${id}`).click(); }
+function applyProfilePhoto(id, url) {
+  const ring = document.getElementById(`ring-${id}`);
+  document.getElementById(`img-${id}`).src = url;
+  ring.classList.add('has-photo');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FILTROS Y GALERÍA
+═══════════════════════════════════════════════════════════ */
+function rebuildYearFilter() {
+  const sel   = document.getElementById('yr-filter');
+  const known = new Set([...sel.querySelectorAll('[data-y]')].map(o => o.value));
+  const years = [...new Set(photos.map(p => (p.date || '').slice(0,4)).filter(Boolean))].sort((a,b) => b-a);
+  years.forEach(y => {
+    if (!known.has(y)) {
+      const o = Object.assign(document.createElement('option'), { value: y, textContent: y });
+      o.dataset.y = 1;
+      sel.appendChild(o);
+    }
+  });
+}
+
+function applyFilters() { renderGallery(); }
+function resetFilters() {
+  document.getElementById('yr-filter').value  = '';
+  document.getElementById('day-filter').value = '';
+  renderGallery();
+}
+
+function renderGallery() {
+  const yr  = document.getElementById('yr-filter').value;
+  const day = document.getElementById('day-filter').value;
+  let list = photos;
+  if (day)     list = list.filter(p => p.date === day);
+  else if (yr) list = list.filter(p => (p.date || '').startsWith(yr));
+
+  const grid = document.getElementById('gallery');
+  grid.innerHTML = '';
+
+  if (!list.length) {
+    const msg = photos.length ? (yr || day ? 'Sin fotos con ese filtro.' : 'Aún no hay fotos.') : '¡Añade vuestros primeros recuerdos!';
+    grid.innerHTML = `
+      <div class="gallery-empty">
+        <span class="empty-icon">${photos.length ? '🔍' : '📷'}</span>
+        <p>${msg}</p>
+      </div>`;
+    return;
+  }
+
+  list.forEach(p => {
+    const tile = document.createElement('div');
+    tile.className = 'photo-tile';
+    tile.onclick = () => openView(p.id);
+    tile.innerHTML = `
+      <img src="${p.src}" alt="" loading="lazy">
+      ${p.date ? `<div class="tile-date-bar">${fmtDate(p.date)}</div>` : ''}
+      ${p.description ? '<div class="tile-note-dot">💬</div>' : ''}
+    `;
+    grid.appendChild(tile);
+  });
+}
+
+function fmtDate(d) {
+  if (!d) return '';
+  try {
+    const [y, m, day] = d.split('-');
+    const M = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+    return `${+day} ${M[+m-1]} ${y}`;
+  } catch { return d; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   VISOR Y EDICIÓN
+═══════════════════════════════════════════════════════════ */
+function openView(id) {
+  const p = photos.find(x => x.id === id);
+  if (!p) return;
+  activeId = id;
+  document.getElementById('view-img').src = p.src;
+  document.getElementById('view-date').textContent = p.date ? '📅 ' + fmtDate(p.date) : '';
+  document.getElementById('view-desc').value = p.description || '';
+  document.getElementById('view-bd').classList.add('open');
+}
+
+function closeView() {
+  document.getElementById('view-bd').classList.remove('open');
+  activeId = null;
+}
+
+document.getElementById('view-bd').addEventListener('click', e => {
+  if (e.target === document.getElementById('view-bd')) closeView();
+});
+
+async function saveDesc() {
+  if (!activeId) return;
+  const p = photos.find(x => x.id === activeId);
+  if (!p) return;
+  p.description = document.getElementById('view-desc').value;
+  renderGallery();
+  await saveAllData();
+  const btn = document.getElementById('btn-save-desc');
+  const orig = btn.textContent;
+  btn.textContent = '✓ Guardado';
+  setTimeout(() => { btn.textContent = orig; }, 1800);
+}
+
+async function deletePhoto() {
+  if (!activeId || !confirm('¿Eliminar esta foto del álbum?')) return;
+  photos = photos.filter(p => p.id !== activeId);
+  closeView();
+  rebuildYearFilter();
+  renderGallery();
+  await saveAllData();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ZONA DE SUBIDA MASIVA
+═══════════════════════════════════════════════════════════ */
+function openUpload() {
+  pendingFiles = [];
+  document.getElementById('thumb-grid').innerHTML = '';
+  document.getElementById('up-count').textContent = '';
+  document.getElementById('up-date').value = new Date().toISOString().slice(0, 10);
+  document.getElementById('btn-confirm').disabled = true;
+  document.getElementById('up-bd').classList.add('open');
+}
+
+function closeUpload() { document.getElementById('up-bd').classList.remove('open'); }
+document.getElementById('up-bd').addEventListener('click', e => { if (e.target === document.getElementById('up-bd')) closeUpload(); });
+document.getElementById('multi-file').addEventListener('change', function() { addFiles([...this.files]); this.value = ''; });
+function onDragOver(e)  { e.preventDefault(); document.getElementById('drop-zone').classList.add('over'); }
+function onDragLeave()  { document.getElementById('drop-zone').classList.remove('over'); }
+function onDrop(e) { e.preventDefault(); onDragLeave(); addFiles([...e.dataTransfer.files].filter(f => f.type.startsWith('image/'))); }
+
+function addFiles(files) {
+  files.forEach(file => {
+    resizeImage(file, 1400, 1400, url => {
+      pendingFiles.push(url);
+      const el = document.createElement('div');
+      el.className = 'thumb-item';
+      el.innerHTML = `<img src="${url}" alt="">`;
+      document.getElementById('thumb-grid').appendChild(el);
+      document.getElementById('up-count').textContent = `${pendingFiles.length} foto(s) seleccionada(s)`;
+      document.getElementById('btn-confirm').disabled = false;
+    });
+  });
+}
+
+async function commitUpload() {
+  if (!pendingFiles.length) return;
+  const date   = document.getElementById('up-date').value;
+  const btn    = document.getElementById('btn-confirm');
+  btn.disabled = true;
+  btn.textContent = 'Subiendo a la nube…';
+
+  for (const src of pendingFiles) {
+    const cloudUrl = await uploadToCloudinary(src);
+    if (cloudUrl) {
+      const p = {
+        id:          `${Date.now()}_${Math.random().toString(36).slice(2)}`,
+        src:         cloudUrl,
+        date,
+        description: ''
+      };
+      photos.push(p);
+    }
+  }
+
+  photos.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  rebuildYearFilter();
+  renderGallery();
+  await saveAllData();
+
+  document.querySelector('[data-target="album"]').click();
+  closeUpload();
+  pendingFiles         = [];
+  btn.disabled         = false;
+  btn.textContent      = '📤 Añadir al álbum';
+}
+
+function resizeImage(file, maxW, maxH, cb) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      let w = img.width, h = img.height;
+      if (w > maxW || h > maxH) {
+        const ratio = Math.min(maxW / w, maxH / h);
+        w = Math.round(w * ratio);
+        h = Math.round(h * ratio);
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      cb(canvas.toDataURL('image/jpeg', 0.85));
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+init().catch(err => console.error('Error al iniciar el álbum:', err));
+</script>
+</body>
+</html>
