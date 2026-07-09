@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nuestro Álbum 💙</title>
+  <title>Memories AxJ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
@@ -73,7 +73,6 @@
     .heart-icon {
       font-size: 2.6rem;
       display: block;
-      animation: heartbeat 2.4s ease-in-out infinite;
       filter: drop-shadow(0 0 12px #e8439380);
     }
 
@@ -171,9 +170,8 @@
     }
 
     .connector-line {
-      width: 1px;
+      width: 33px;
       height: 60px;
-      background: linear-gradient(to bottom, transparent, var(--border-hi), transparent);
     }
 
     .connector-heart {
@@ -198,8 +196,6 @@
     /* Photo */
     .profile-area {
       position: relative;
-      width: 124px;
-      height: 124px;
       margin: 0 auto 1.5rem;
       cursor: pointer;
     }
@@ -207,7 +203,6 @@
     .profile-ring {
       width: 100%;
       height: 100%;
-      border-radius: 50%;
       background: var(--bg-raised);
       border: 2px dashed var(--text-muted);
       display: flex;
@@ -219,7 +214,6 @@
 
     .profile-ring.has-photo {
       border-style: solid;
-      border-color: var(--blue-accent);
       box-shadow: 0 0 20px #4f86e025;
     }
 
@@ -228,7 +222,6 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 50%;
     }
 
     .profile-ring.has-photo .placeholder-icon { display: none; }
@@ -239,7 +232,6 @@
     .photo-hover {
       position: absolute;
       inset: 0;
-      border-radius: 50%;
       background: rgba(0,0,0,0.55);
       display: flex;
       align-items: center;
@@ -294,7 +286,13 @@
     }
 
     /* ─── SHARED CARD ─── */
-    .shared-card {
+    .contenedor-colores{
+      display: flex;
+      gap: 4.5%;
+    }
+
+    .shared-card1 {
+      flex: 1;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--r);
@@ -315,8 +313,7 @@
     .colors-flex {
       display: flex;
       justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
+      gap: 1rem;
     }
 
     .color-item {
@@ -352,24 +349,44 @@
 
     input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; border-radius: 50%; }
     input[type="color"]::-webkit-color-swatch { border-radius: 50%; border: none; }
+    input[type="color"]::-webkit-color-swatch { border-radius: 50%; border: none; }
     input[type="color"]::-moz-color-swatch { border-radius: 50%; border: none; }
 
     /* Symbols */
+    .contenedor-simbolos{
+      display: flex;
+      gap: 4.5%;
+    }
+    .shared-card2 {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.25rem;
+    }
+
     .symbols-flex {
       display: flex;
       justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .symbols-flex2 {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      padding-top: 1rem;
     }
 
     .sym-input {
-      width: 62px;
-      height: 62px;
-      background: var(--bg-raised);
-      border: 2px dashed var(--border);
+      width: 65px;
+      height: 65px;
+      background: var(--bg-card);
+      border: 2px solid var(--border);
       border-radius: 12px;
       text-align: center;
-      font-size: 1.9rem;
+      font-size: 2.2rem;
       line-height: 1;
       color: var(--text);
       cursor: text;
@@ -496,14 +513,12 @@
       position: absolute;
       top: 6px; right: 6px;
       width: 16px; height: 16px;
-      background: var(--blue-mid);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 0.48rem;
       pointer-events: none;
-      box-shadow: 0 0 6px #2450a860;
     }
 
     /* Empty state */
@@ -740,6 +755,82 @@
     .btn-confirm:disabled { opacity: 0.4; cursor: not-allowed; }
     .btn-confirm:not(:disabled):hover { background: var(--blue-accent); }
 
+    /* ─── FLOATING IMPROVEMENTS PANEL ─── */
+    .improvements-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .improvements-toggle {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.3;
+      transition: opacity 0.2s, transform 0.2s, border-color 0.2s;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+    }
+
+    .improvements-toggle:hover {
+      opacity: 1;
+      transform: scale(1.05);
+      border-color: var(--blue-accent);
+    }
+
+    .improvements-panel {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 1rem;
+      width: 350px;
+      margin-bottom: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+    }
+
+    .improvements-panel.open {
+      display: block;
+    }
+
+    .improvements-panel h4 {
+      font-size: 0.85rem;
+      color: var(--blue-sky);
+      margin-bottom: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    #improvements-text {
+      width: 100%;
+      height: 130px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      padding: 0.6rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      line-height: 1.4;
+      resize: none;
+    }
+
+    #improvements-text:focus {
+      outline: none;
+      border-color: var(--blue-accent);
+    }
+
     /* Global scrollbar */
     * { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
     ::-webkit-scrollbar { width: 5px; }
@@ -753,6 +844,7 @@
       }
 
       .couple-connector { display: none; }
+      .contenedor-colores, .contenedor-simbolos { flex-direction: column; gap: 1rem; }
 
       .photo-grid { grid-template-columns: repeat(2, 1fr); }
 
@@ -780,10 +872,9 @@
 <!-- ═══ HEADER ═══ -->
 <header class="site-header">
   <div class="heart-wrap">
-    <span class="heart-icon">❤️</span>
+    <span class="heart-icon">🤍</span>
   </div>
-  <div class="site-title">Nuestro Álbum</div>
-  <div class="site-subtitle">recuerdos que duran para siempre</div>
+  <div class="site-title">Memories AxJ</div>
 </header>
 
 <!-- ═══ NAV ═══ -->
@@ -810,23 +901,23 @@
 
       <div class="info-grid">
         <div class="info-row">
-          <span class="info-lbl">Nombre</span>
+          <span class="info-lbl">Nombre:</span>
           <input class="info-input" type="text" id="p1-name" placeholder="Nombre…">
         </div>
         <div class="info-row">
-          <span class="info-lbl">Apodo</span>
+          <span class="info-lbl">Apodo:</span>
           <input class="info-input" type="text" id="p1-nick" placeholder="Apodo…">
         </div>
         <div class="info-row">
-          <span class="info-lbl">Edad</span>
+          <span class="info-lbl">Edad:</span>
           <input class="info-input" type="text" id="p1-age" placeholder="Edad…">
         </div>
         <div class="info-row">
-          <span class="info-lbl">Cumpleaños</span>
+          <span class="info-lbl">Cumpleaños:</span>
           <input class="info-input" type="text" id="p1-bday" placeholder="DD/MM/AAAA">
         </div>
         <div class="info-row">
-          <span class="info-lbl">Horóscopo</span>
+          <span class="info-lbl">Horóscopo:</span>
           <input class="info-input" type="text" id="p1-horoscope" placeholder="Signo…">
         </div>
       </div>
@@ -835,7 +926,7 @@
     <!-- Connector -->
     <div class="couple-connector">
       <div class="connector-line"></div>
-      <span class="connector-heart">💙</span>
+      <div class="connector-heart"></div>
       <div class="connector-line"></div>
     </div>
 
@@ -852,23 +943,23 @@
 
       <div class="info-grid">
         <div class="info-row">
-          <span class="info-lbl">Nombre</span>
+          <span class="info-lbl">Nombre:</span>
           <input class="info-input" type="text" id="p2-name" placeholder="Nombre…">
         </div>
         <div class="info-row">
-          <span class="info-lbl">Apodo</span>
+          <span class="info-lbl">Apodo:</span>
           <input class="info-input" type="text" id="p2-nick" placeholder="Apodo…">
         </div>
         <div class="info-row">
-          <span class="info-lbl">Edad</span>
+          <span class="info-lbl">Edad:</span>
           <input class="info-input" type="text" id="p2-age" placeholder="Edad…">
         </div>
         <div class="info-row">
-          <span class="info-lbl">Cumpleaños</span>
+          <span class="info-lbl">Cumpleaños:</span>
           <input class="info-input" type="text" id="p2-bday" placeholder="DD/MM/AAAA">
         </div>
         <div class="info-row">
-          <span class="info-lbl">Horóscopo</span>
+          <span class="info-lbl">Horóscopo:</span>
           <input class="info-input" type="text" id="p2-horoscope" placeholder="Signo…">
         </div>
       </div>
@@ -876,54 +967,78 @@
   </div>
 
   <!-- Shared: Colors -->
-  <div class="shared-card">
-    <div class="card-title">🎨 Colores favoritos</div>
-    <div class="colors-flex">
-      <div class="color-item">
-        <input type="color" id="col-1" value="#163368">
-        <span>Color 1</span>
+  <div class="contenedor-colores">
+    <div class="shared-card1">
+      <div class="card-title">Colores favoritos:</div>
+      <div class="colors-flex">
+        <div class="color-item"><input type="color" id="col-1" value="#000000"></div>
+        <div class="color-item"><input type="color" id="col-2" value="#000000"></div>
+        <div class="color-item"><input type="color" id="col-3" value="#000000"></div>
       </div>
-      <div class="color-item">
-        <input type="color" id="col-2" value="#e84393">
-        <span>Color 2</span>
-      </div>
-      <div class="color-item">
-        <input type="color" id="col-3" value="#8b5cf6">
-        <span>Color 3</span>
+    </div>
+
+    <div class="shared-card1">
+      <div class="card-title">Colores favoritos:</div>
+      <div class="colors-flex">
+        <div class="color-item"><input type="color" id="col-4" value="#000000"></div>
+        <div class="color-item"><input type="color" id="col-5" value="#000000"></div>
+        <div class="color-item"><input type="color" id="col-6" value="#000000"></div>
       </div>
     </div>
   </div>
 
   <!-- Shared: Symbols -->
-  <div class="shared-card">
-    <div class="card-title">✨ Símbolos que nos representan</div>
-    <div class="symbols-flex">
-      <input class="sym-input" type="text" placeholder="✨" maxlength="2" id="sym-1">
-      <input class="sym-input" type="text" placeholder="🌙" maxlength="2" id="sym-2">
-      <input class="sym-input" type="text" placeholder="⭐" maxlength="2" id="sym-3">
-      <input class="sym-input" type="text" placeholder="🎵" maxlength="2" id="sym-4">
+  <div class="contenedor-simbolos">
+    <div class="shared-card2">
+      <div class="card-title">Símbolos que nos representan:</div>
+      <div class="symbols-flex">
+        <input class="sym-input" type="text" placeholder="🐈‍⬛" maxlength="2" id="sym-1">
+        <input class="sym-input" type="text" placeholder="☯︎" maxlength="2" id="sym-2">
+        <input class="sym-input" type="text" placeholder="💧" maxlength="2" id="sym-3">
+      </div>
+      <div class="symbols-flex2">
+        <input class="sym-input" type="text" placeholder="🌙" maxlength="2" id="sym-4">
+      </div>
+    </div>
+
+    <div class="shared-card2">
+      <div class="card-title">Símbolos que nos representan:</div>
+      <div class="symbols-flex">
+        <input class="sym-input" type="text" placeholder="🐕" maxlength="2" id="sym-5">
+        <input class="sym-input" type="text" placeholder="☯︎" maxlength="2" id="sym-6">
+        <input class="sym-input" type="text" placeholder="🔥" maxlength="2" id="sym-7">
+      </div>
+      <div class="symbols-flex2">
+        <input class="sym-input" type="text" placeholder="☀️" maxlength="2" id="sym-8">
+      </div>
     </div>
   </div>
-
 </main>
 
 <!-- ═══ ALBUM PAGE ═══ -->
 <main id="page-album" class="page">
-
   <div class="album-toolbar">
     <div class="filter-group">
       <select class="filter-ctl" id="yr-filter" onchange="applyFilters()">
         <option value="">📅 Todos los años</option>
       </select>
       <input type="date" class="filter-ctl" id="day-filter" title="Filtrar por día concreto" onchange="applyFilters()">
-      <button class="btn-ghost" onclick="resetFilters()">✕ Limpiar filtros</button>
+      <button class="btn-ghost" onclick="resetFilters()">Quitar filtros</button>
     </div>
-    <button class="btn-add" onclick="openUpload()">＋ Añadir fotos</button>
+    <button class="btn-add" onclick="openUpload()">＋ Añadir foto</button>
   </div>
 
   <div class="photo-grid" id="gallery"></div>
-
 </main>
+
+<!-- ═══ SECCIÓN DISCRETA DE MEJORAS ═══ -->
+<div class="improvements-container">
+  <div class="improvements-panel" id="improvements-panel">
+    <h4>Sugerencias para mejoras o arreglos</h4>
+    <textarea id="improvements-text" placeholder="Escribe aquí las cosas a mejorar o arreglar del álbum para que sea mejor y más nuestro :)"></textarea>
+  </div>
+  <button class="improvements-toggle" onclick="toggleImprovements()" title="Mejoras">💡</button>
+</div>
 
 <!-- ═══ PHOTO VIEW MODAL ═══ -->
 <div class="backdrop" id="view-bd">
@@ -934,7 +1049,7 @@
     </div>
     <div class="modal-body">
       <div class="view-date" id="view-date"></div>
-      <textarea class="desc-area" id="view-desc" placeholder="Añade una descripción a este recuerdo…"></textarea>
+      <textarea class="desc-area" id="view-desc" placeholder="Añade una descripción a la imagen"></textarea>
       <div class="modal-actions">
         <button class="btn-del" onclick="deletePhoto()">🗑 Eliminar foto</button>
         <button class="btn-save" id="btn-save-desc" onclick="saveDesc()">💾 Guardar</button>
@@ -947,7 +1062,7 @@
 <div class="backdrop" id="up-bd">
   <div class="modal-box modal-sm">
     <button class="btn-x" onclick="closeUpload()">✕</button>
-    <div class="upload-header">📸 Añadir fotos al álbum</div>
+    <div class="upload-header"></div>
     <div class="modal-body">
       <div class="drop-zone" id="drop-zone"
            onclick="document.getElementById('multi-file').click()"
@@ -964,7 +1079,7 @@
       <div class="upload-count" id="up-count"></div>
 
       <div class="date-row">
-        <label>📅 Fecha de las fotos:</label>
+        <label>📅 Fecha de la/s foto/s:</label>
         <input type="date" id="up-date">
       </div>
 
@@ -977,13 +1092,13 @@
   </div>
 </div>
 
-<!-- ════════ SCRIPT ADAPTADO PARA CLOUDINARY Y JSONBIN ════════ -->
+<!-- ════════ SCRIPT COMPLETO ACTUALIZADO ════════ -->
 <script>
 /* ═══════════════════════════════════════════════════════════
-   1. CREDENCIALES (Reemplaza con tus datos de los Pasos 1 y 2)
+   1. CREDENCIALES
 ═══════════════════════════════════════════════════════════ */
 const CLOUD_NAME   = "lz69sdof";
-const CLOUD_PRESET = "Memories AxJ"; // O el nombre que le hayas puesto
+const CLOUD_PRESET = "Memories AxJ"; 
 
 const BIN_ID       = "6a46a975da38895dfe23f061";
 const MASTER_KEY   = "$2a$10$TdWH5mgDS/pp1qQ0dzK.QeAUYKYtG1G/tfJ9PC6/4h2AP5cRDikry";
@@ -994,7 +1109,11 @@ const MASTER_KEY   = "$2a$10$TdWH5mgDS/pp1qQ0dzK.QeAUYKYtG1G/tfJ9PC6/4h2AP5cRDik
 let globalState = {
   p1: { name: '', nick: '', age: '', bday: '', horoscope: '', photo: '' },
   p2: { name: '', nick: '', age: '', bday: '', horoscope: '', photo: '' },
-  shared: { colors: ['#163368', '#e84393', '#8b5cf6'], symbols: ['', '', '', ''] },
+  shared: { 
+    colors: ['#163368', '#e84393', '#8b5cf6', '#163368', '#e84393', '#8b5cf6'], 
+    symbols: ['', '', '', '', '', '', '', ''] 
+  },
+  improvements: '',
   photos: []
 };
 let photos       = [];
@@ -1066,9 +1185,25 @@ function applyStateToDOM() {
     });
     if (d.photo) applyProfilePhoto(id, d.photo);
   });
+  
   const s = globalState.shared || {};
-  if (s.colors) s.colors.forEach((c, i) => { const el = document.getElementById(`col-${i+1}`); if (el) el.value = c; });
-  if (s.symbols) s.symbols.forEach((sym, i) => { const el = document.getElementById(`sym-${i+1}`); if (el) el.value = sym; });
+  if (s.colors) {
+    for (let i = 1; i <= 6; i++) {
+      const el = document.getElementById(`col-${i}`);
+      if (el && s.colors[i - 1] !== undefined) el.value = s.colors[i - 1];
+    }
+  }
+  if (s.symbols) {
+    for (let i = 1; i <= 8; i++) {
+      const el = document.getElementById(`sym-${i}`);
+      if (el && s.symbols[i - 1] !== undefined) el.value = s.symbols[i - 1];
+    }
+  }
+
+  const impEl = document.getElementById('improvements-text');
+  if (impEl && globalState.improvements !== undefined) {
+    impEl.value = globalState.improvements;
+  }
 }
 
 async function saveProfile(id) {
@@ -1086,8 +1221,8 @@ async function saveProfile(id) {
 
 async function saveShared() {
   globalState.shared = {
-    colors:  [1,2,3].map(i => document.getElementById(`col-${i}`).value),
-    symbols: [1,2,3,4].map(i => document.getElementById(`sym-${i}`).value),
+    colors:  [1,2,3,4,5,6].map(i => document.getElementById(`col-${i}`).value),
+    symbols: [1,2,3,4,5,6,7,8].map(i => document.getElementById(`sym-${i}`).value),
   };
   await saveAllData();
 }
@@ -1109,12 +1244,23 @@ function bindSaveListeners() {
       });
     });
   });
-  [1,2,3].forEach(i   => document.getElementById(`col-${i}`).addEventListener('change', saveShared));
-  [1,2,3,4].forEach(i => document.getElementById(`sym-${i}`).addEventListener('change', saveShared));
+  
+  [1,2,3,4,5,6].forEach(i   => document.getElementById(`col-${i}`).addEventListener('change', saveShared));
+  [1,2,3,4,5,6,7,8].forEach(i => document.getElementById(`sym-${i}`).addEventListener('change', saveShared));
+
+  document.getElementById('improvements-text').addEventListener('change', async function() {
+    globalState.improvements = this.value;
+    await saveAllData();
+  });
+}
+
+function toggleImprovements() {
+  const panel = document.getElementById('improvements-panel');
+  panel.classList.toggle('open');
 }
 
 /* ═══════════════════════════════════════════════════════════
-   INIT Y NAVEGACIÓN (Se mantienen iguales)
+   INIT Y NAVEGACIÓN
 ═══════════════════════════════════════════════════════════ */
 async function init() {
   await loadAllData();
@@ -1174,7 +1320,7 @@ function renderGallery() {
   grid.innerHTML = '';
 
   if (!list.length) {
-    const msg = photos.length ? (yr || day ? 'Sin fotos con ese filtro.' : 'Aún no hay fotos.') : '¡Añade vuestros primeros recuerdos!';
+    const msg = photos.length ? (yr || day ? 'Sin fotos con ese filtro.' : 'Aún no hay fotos.') : 'Añade la primera foto :)';
     grid.innerHTML = `
       <div class="gallery-empty">
         <span class="empty-icon">${photos.length ? '🔍' : '📷'}</span>
@@ -1190,7 +1336,7 @@ function renderGallery() {
     tile.innerHTML = `
       <img src="${p.src}" alt="" loading="lazy">
       ${p.date ? `<div class="tile-date-bar">${fmtDate(p.date)}</div>` : ''}
-      ${p.description ? '<div class="tile-note-dot">💬</div>' : ''}
+      ${p.description ? '<div class="tile-note-dot"></div>' : ''}
     `;
     grid.appendChild(tile);
   });
